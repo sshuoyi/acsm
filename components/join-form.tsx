@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 import { CheckCircle2, ArrowRight } from 'lucide-react'
 import type { Dictionary } from '@/lib/i18n'
 import type { Locale } from '@/lib/i18n/config'
@@ -33,6 +33,11 @@ export function JoinForm({
 }) {
   const f = dict.form
   const [submitted, setSubmitted] = useState(false)
+  const [role, setRole] = useState(defaultRole ?? '')
+
+  useEffect(() => {
+    setRole(new URLSearchParams(window.location.search).get('role') ?? defaultRole ?? '')
+  }, [defaultRole])
   const [errors, setErrors] = useState<Record<string, string>>({})
 
   const successTitle = dict.platformPage.successTitle
@@ -97,7 +102,8 @@ export function JoinForm({
 
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label={f.type} name="type" error={errors.type} required requiredLabel={f.required}>
-          <select id="type" name="type" defaultValue={defaultRole ?? ''} className={inputClass}>
+          <select id="type" name="type" value={role}
+            onChange={(e) => setRole(e.target.value)} className={inputClass}>
             <option value="" disabled>
               {f.selectPlaceholder}
             </option>

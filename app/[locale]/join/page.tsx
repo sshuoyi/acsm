@@ -20,13 +20,10 @@ export async function generateMetadata({
 
 export default async function JoinPage({
   params,
-  searchParams,
 }: {
   params: Promise<{ locale: string }>
-  searchParams: Promise<{ role?: string }>
 }) {
   const { locale } = await params
-  const { role } = await searchParams
   if (!isLocale(locale)) notFound()
   const dict = getDictionary(locale)
   const j = dict.joinPage
@@ -62,7 +59,7 @@ export default async function JoinPage({
 
           {applicationsEnabled ? (
             <div className="rounded-3xl border border-hairline bg-surface/50 p-6 sm:p-8">
-              <JoinForm dict={dict} locale={locale} variant="join" defaultRole={role} />
+              <JoinForm dict={dict} locale={locale} variant="join" />
             </div>
           ) : null}
         </div>

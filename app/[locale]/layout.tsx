@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react'
 import type { Metadata, Viewport } from 'next'
-import { Analytics } from '@vercel/analytics/next'
 import {
   locales,
   localeDirection,
@@ -92,7 +91,6 @@ export default async function LocaleLayout({
         <SiteHeader locale={locale} dict={dict} />
         <main id="main">{children}</main>
         <SiteFooter locale={locale} dict={dict} />
-        {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
   )
